@@ -1,5 +1,5 @@
 <template>
-  <a-row id="globalHeader" align="center" :wrap="false">
+  <a-row id="globalHeader" style="margin-bottom: 16px" align="center">
     <a-col flex="auto">
       <a-menu
         mode="horizontal"
@@ -28,7 +28,7 @@
             }"
           />
         </a-menu-item>
-        <a-menu-item v-for="item in routes" :key="item.path">
+        <a-menu-item v-for="item in visibleRoutes" :key="item.path">
           {{ item.name }}
         </a-menu-item>
       </a-menu>
@@ -58,6 +58,14 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 
 const router = useRouter();
+
+// 展示在菜单的路由
+const visibleRoutes = routes.filter((item, index) => {
+  if (item.meta?.hideInMenu) {
+    return false;
+  }
+  return true;
+});
 // 路由跳转时，更新选中的菜单项
 router.afterEach((to, from, failure) => {
   selectedKeys.value = [to.path];
