@@ -7,6 +7,7 @@ export default {
   state: () => ({
     loginUser: {
       username: "未登录",
+      role: "notLogin",
     },
   }),
   // actions
