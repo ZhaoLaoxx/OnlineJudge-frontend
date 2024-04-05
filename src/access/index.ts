@@ -8,10 +8,10 @@ router.beforeEach(async (to, from, next) => {
   console.log("登录用户信息", store.state.user.loginUser);
   const loginUser = store.state.user.loginUser;
   // // 如果之前没登录过，自动登录
-  // if (!loginUser || !loginUser.userRole) {
-  //   // 加await是为了保证等用户登录成功后，再执行后面的代码
-  //   await store.dispatch("user/getLoginUser");
-  // }
+  if (!loginUser || !loginUser.userRole) {
+    // 加await是为了保证等用户登录成功后，再执行后面的代码
+    await store.dispatch("user/getLoginUser");
+  }
   const needAccess = (to.meta?.access as string) ?? accessEnum.NOT_LOGIN;
   // 要跳转的页面必须要登录
   if (needAccess !== AccessEnum.NOT_LOGIN) {
